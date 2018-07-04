@@ -27,13 +27,16 @@ public class BallController : MonoBehaviour {
 		// スコア加算＆表示
 		if (other.gameObject.tag == "SmallStarTag") {
 			score += 10;
+			this.scoreText.GetComponent<Text>().text = score.ToString();
 		} else if (other.gameObject.tag == "LargeStarTag") {
 			score += 20;
+			this.scoreText.GetComponent<Text>().text = score.ToString();
 		} else if (other.gameObject.tag == "SmallCloudTag") {
 			score += 30;
+			this.scoreText.GetComponent<Text>().text = score.ToString();
 		} else if (other.gameObject.tag == "LargeCloudTag") {
 			score += 40;
+			this.scoreText.GetComponent<Text>().text = score.ToString();
 		}
-		this.scoreText.GetComponent<Text>().text = score.ToString();
 	}
 }
