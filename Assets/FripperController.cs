@@ -29,28 +29,45 @@ public class FripperController : MonoBehaviour {
 			SetAngle (this.defaultAngle);
 		}
 
-		// TODO 動かす
+		// 発展課題：タッチでフリッパーを操作
 		int halfWidth = Screen.width / 2;
 		if (Input.touchCount > 0) {
-			for (int i = 0; i < Input.touchCount; ++i)
-			{
-				// 画面の左側
-				if (Input.GetTouch (i).position.x < halfWidth && tag == "LeftFripperTag") {
-					if (Input.GetTouch (i).phase == TouchPhase.Began) {
-						SetAngle (this.flickAngle);
-					}
-					if (Input.GetTouch (i).phase == TouchPhase.Ended) {
-						SetAngle (this.defaultAngle);
+			bool leftOn = false;
+			bool rightOn = false;
+			// 上げるためのタッチがあるか確認
+			for (int i = 0; i < Input.touchCount; ++i){
+				if (tag == "LeftFripperTag") {
+					if (Input.GetTouch (i).position.x < halfWidth) {
+						if (Input.GetTouch (i).phase == TouchPhase.Began
+							|| Input.GetTouch (i).phase == TouchPhase.Moved
+							|| Input.GetTouch (i).phase == TouchPhase.Stationary) {
+							leftOn = true;
+						}
 					}
 				}
-				// 画面の右側
-				if (Input.GetTouch (i).position.x > halfWidth && tag == "RightFripperTag") {
-					if (Input.GetTouch (i).phase == TouchPhase.Began) {
-						SetAngle (this.flickAngle);
+				if (tag == "RightFripperTag") {
+					if (Input.GetTouch (i).position.x > halfWidth) {
+						if (Input.GetTouch (i).phase == TouchPhase.Began
+							|| Input.GetTouch (i).phase == TouchPhase.Moved
+							|| Input.GetTouch (i).phase == TouchPhase.Stationary) {
+							rightOn = true;
+						}
 					}
-					if (Input.GetTouch (i).phase == TouchPhase.Ended) {
-						SetAngle (this.defaultAngle);
-					}
+				}
+			}
+			// タッチ状況に応じて上げ下げ
+			if (tag == "LeftFripperTag") {
+				if (leftOn) {
+					SetAngle (this.flickAngle);
+				} else {
+					SetAngle (this.defaultAngle);
+				}
+			}
+			if (tag == "RightFripperTag") {
+				if (rightOn) {
+					SetAngle (this.flickAngle);
+				} else {
+					SetAngle (this.defaultAngle);
 				}
 			}
 		}
